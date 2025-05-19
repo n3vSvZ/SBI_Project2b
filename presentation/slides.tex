@@ -1,0 +1,79 @@
+\documentclass{beamer}
+
+\usetheme{metropolis}
+
+\title[Normalising flows]{Learning to infer:\\Normalising flows for statistical inference}
+% \subtitle{Course project -- Machine Learning for Physics and Astronomy}
+\subtitle{Project for the course\\\textit{Machine Learning for Physics and Astronomy}}
+\author[DL, SP, KT, SvZ]{David Littel, Sokratis Parmagkos, Katerina Theodoridou, Sven van Zijl} % names shown in alphabetical order
+\date{May 26, 2025}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{Bayesian foundations and the SBI solution}
+\[
+p(\theta | x) = \frac{p(x | \theta) \cdot p(\theta)}{p(x)}
+\]
+\begin{itemize}
+\item Prior: $p(\theta)$
+\item Likelihood: $p(x|\theta)$
+\item Posterior: $p(\theta|x)$
+\item Marginal: $p(x)$
+\end{itemize}
+Computing the likelihood can be challenging in many real-world applications $\to$ Bayesian inference becomes difficult or impossible
+% \vspace{\baselineskip}
+
+But... SBI bypasses the need for an explicit likelihood
+\end{frame}
+
+\begin{frame}{What is SBI?}
+\begin{itemize}
+\item SBI = Simulation-Based Inference
+\item It is a class of techniques used to estimate posterior distributions
+\item Used when the likelihood function is unknown or too complex to compute
+\item Neural networks learn to approximate posterior from simulated (parameter, data) pairs
+\end{itemize}
+\end{frame}
+
+\begin{frame}{How does SBI work?}
+The process works as follows:
+\begin{enumerate}
+\item Sample $\theta$ from the prior distribution
+\item Simulate data $x$ from the model using $\theta$
+\item Train a neural network to learn how $\theta$ and $x$ relate
+\item Input the observed data $x_\text{obs}$ into the network to obtain the posterior $p(\theta | x_\text{obs})$
+\end{enumerate}
+\end{frame}
+
+\section{Techniques and tools}
+\begin{frame}{(S)NPE: (Sequential) Neural Posterior Estimation}
+\begin{enumerate}
+\item Sample parameters from prior
+\item Generate data with simulator
+\item Train neural density estimator on $(\theta, x)$ pairs
+\item Infer posterior using trained network
+\end{enumerate}
+Once trained, it can quickly produce posterior estimates for new observations without retraining, making the inference process highly efficient and reusable.
+\end{frame}
+
+\begin{frame}{Normalizing flows}
+Normalizing flows are a class of neural density estimation models that transform a simple base distribution (e.g., a multivariate Gaussian) into a complex target distribution using a sequence of invertible and differentiable transformations.
+\begin{itemize}
+\item Used for flexible density estimation
+\item Learn invertible mappings from simple to complex distributions
+\item Efficient sampling + likelihood evaluation
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}
